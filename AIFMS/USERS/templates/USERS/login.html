@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-50">
+    <div class="flex flex-col justify-center items-center min-h-screen">
+      <!-- Logo Section -->
+      <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800 flex items-center justify-center">
+          RUPEE IQ
+          <img class="h-8 ml-3" src="{% static 'img/rupee-iq.svg' %}" alt="RupeeIQ Logo" />
+        </h1>
+      </div>
+
+      <!-- Login Form Container -->
+      <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-8">
+        <h2 class="text-center text-3xl font-extrabold text-gray-800 mb-6">Login</h2>
+
+        <!-- Display messages -->
+        {% if messages %}
+          <ul class="mb-4">
+            {% for message in messages %}
+              <li class="text-red-600">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <!-- Login Form -->
+        <form method="post" class="space-y-6">
+          {% csrf_token %}
+          <div class="mb-5">
+            <!-- Username Field -->
+            <input class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" name="username" id="id_username" value="{{ form.username.value|default_if_none:'' }}" placeholder="Username" required />
+          </div>
+
+          <div class="mb-5">
+            <!-- Password Field -->
+            <input class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" type="password" name="password" id="id_password" placeholder="Password" required />
+          </div>
+
+          <!-- Login Button -->
+          <button class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition duration-300" type="submit">Login</button>
+        </form>
+
+        <!-- Sign Up Redirect -->
+        <p class="text-center text-gray-600 mt-4">
+          Don't have an account?
+          <a class="text-blue-600 hover:underline" href="{% url 'register' %}">Sign up</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

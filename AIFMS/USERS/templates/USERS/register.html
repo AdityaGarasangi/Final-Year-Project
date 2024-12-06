@@ -1,0 +1,89 @@
+z{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-50">
+    <div class="flex flex-col justify-center items-center min-h-screen">
+      <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800 flex items-center justify-center">
+          RUPEE IQ
+          <img class="h-8 ml-3" src="{% static 'img/rupee-iq.svg' %}" alt="RupeeIQ Logo" />
+        </h1>
+      </div>
+
+      <div class="bg-white shadow-lg rounded-lg w-full max-w-lg mx-4 sm:mx-auto p-8">
+        <h2 class="text-center text-3xl font-extrabold text-gray-800 mb-6">Register</h2>
+
+        <!-- Display messages -->
+        {% if messages %}
+          <ul class="mb-4">
+            {% for message in messages %}
+              <li class="text-red-600">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <!-- Display form errors -->
+        {% if user_form.errors %}
+          <div class="text-red-500 mb-4">
+            <ul>
+              {% for field in user_form %}
+                {% for error in field.errors %}
+                  <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+          {% csrf_token %}
+
+          <!-- First Name -->
+          <div class="relative">
+            <input type="text" name="first_name" id="id_first_name" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" placeholder="First Name" value="{{ user_form.first_name.value|default_if_none:'' }}" />
+          </div>
+
+          <!-- Last Name -->
+          <div class="relative">
+            <input type="text" name="last_name" id="id_last_name" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" placeholder="Last Name" value="{{ user_form.last_name.value|default_if_none:'' }}" />
+          </div>
+
+          <!-- Username -->
+          <div class="relative">
+            <input type="text" name="username" id="id_username" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" placeholder="Username" value="{{ user_form.username.value|default_if_none:'' }}" />
+          </div>
+
+          <!-- Email -->
+          <div class="relative">
+            <input type="email" name="email" id="id_email" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" placeholder="Email" value="{{ user_form.email.value|default_if_none:'' }}" />
+          </div>
+
+          <!-- Password -->
+          <div class="relative">
+            <input type="password" name="password" id="id_password" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" placeholder="Password" />
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="relative">
+            <input type="password" name="password2" id="id_password2" class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500" placeholder="Confirm Password" />
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300">Sign Up</button>
+        </form>
+
+        <!-- Redirect to Login -->
+        <p class="text-center text-gray-700 mt-4">
+          Already have an account?
+          <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Login here</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+{% extends 'DASHBOARD/baseTemp.html' %}
+{% load static %}
+{% block content %}
+  <div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-2xl rounded-xl p-10 max-w-3xl mx-auto">
+      <!-- Profile Header -->
+      <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">Edit Profile</h1>
+
+      <!-- Profile Editing Form -->
+      <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Basic Info Section -->
+        <div class="bg-gray-200 rounded-lg p-6">
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">Basic Information</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="first_name">First Name</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" name="first_name" id="first_name" value="{{ basic_info_form.first_name.value|default_if_none:'' }}" placeholder="Enter First Name" />
+            </div>
+
+            <div>
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="last_name">Last Name</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" name="last_name" id="last_name" value="{{ basic_info_form.last_name.value|default_if_none:'' }}" placeholder="Enter Last Name" />
+            </div>
+            <div class="col-span-2">
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="username">Username</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" name="username" id="username" value="{{ basic_info_form.username.value|default_if_none:'' }}" placeholder="Enter Username" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Info Section -->
+        <div class="bg-gray-200 rounded-lg p-6">
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">Additional Information</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="email">Email</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="email" name="email" id="email" value="{{ more_info_form.email.value|default_if_none:'' }}" placeholder="Enter Your Email" />
+            </div>
+            <div>
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="occupation">Occupation</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" name="occupation" id="occupation" value="{{ more_info_form.occupation.value|default_if_none:'' }}" placeholder="Enter Your Occupation" />
+            </div>
+            <div>
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="location">Location</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" name="location" id="location" value="{{ more_info_form.location.value|default_if_none:'' }}" placeholder="Enter Your Location" />
+            </div>
+            <div>
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="birth_date">Birth Date</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="date" name="birth_date" id="birth_date" value="{{ more_info_form.birth_date.value|default_if_none:'' }}" />
+            </div>
+            <div class="col-span-2">
+              <label class="block text-md font-semibold text-gray-700 mb-2" for="upload">Profile Picture</label>
+              <input class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="file" name="upload" id="upload" />
+              {% if more_info_form.upload.value %}
+                <img src="{{ more_info_form.upload.value.url }}" alt="Profile Picture" class="mt-4 rounded-lg w-32 h-32 object-cover" />
+              {% else %}
+                <img src="{% static 'img/default-pfp.jpg' %}" alt="Default Profile Picture" class="mt-4 rounded-lg w-32 h-32 object-cover" />
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-8">
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-md focus:outline-none transition duration-300">Save Changes</button>
+        </div>
+      </form>
+
+      <!-- Back to Profile Link -->
+      <div class="text-center mt-6">
+        <a href="{% url 'profile' %}" class="text-blue-500 hover:text-blue-700 transition duration-300">Back to Profile</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

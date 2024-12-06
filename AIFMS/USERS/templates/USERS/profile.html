@@ -1,0 +1,78 @@
+{% extends 'DASHBOARD/baseTemp.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="flex min-h-screen bg-gray-100">
+    <!-- Sidebar Integration -->
+    {% include 'DASHBOARD/sidebar.html' %}
+
+    <div class="container mx-auto px-4 py-8">
+      <!-- Profile Card -->
+      <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6">
+        <!-- Profile Header -->
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+          <!-- Profile Image -->
+          <div class="flex-shrink-0">
+            {% if user.profile.upload %}
+              <img src="{{ user.profile.upload.url|safe }}" alt="Profile Picture" class="mx-auto rounded-full h-32 w-32 object-cover border-2 border-gray-300" />
+            {% else %}
+              <img src="{% static 'img/default-pfp.jpg' %}" alt="Default Profile Picture" class="mx-auto rounded-full h-32 w-32 object-cover border-2 border-gray-300" />
+            {% endif %}
+          </div>
+          <div class="text-center md:text-left">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-gray-100">{{ user.first_name }} {{ user.last_name }}</h1>
+            <h2 class="text-lg text-gray-500 dark:text-gray-400">{{ user.username }}</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+              Last Login: <span class="font-medium">{{ user.last_login }}</span>
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              IP Address: <span class="font-medium">{{ user_ip }}</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="mt-6">
+          <nav class="flex space-x-4">
+            <a href="{% url 'edit_profile' %}" class="block px-5 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none transition duration-300">Edit Profile</a>
+          </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content mt-6">
+          <!-- About Tab -->
+          <div class="tab-pane active-tab-content" id="about">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="text-gray-700">
+                <label class="font-bold text-white block text-xl">Occupation</label>
+                <p class="text-lg text-white ml-2">{{ user.profile.occupation }}</p>
+              </div>
+              <div class="text-gray-700">
+                <label class="font-bold text-white block text-xl">Location</label>
+                <p class="text-lg text-white ml-2">{{ user.profile.location }}</p>
+              </div>
+              <div class="text-gray-700">
+                <label class="font-bold text-white block text-xl">Birth Date</label>
+                <p class="text-lg text-white ml-2">{{ user.profile.birth_date|date:'F j, Y' }}</p> <!-- Format date -->
+              </div>
+              <div class="text-gray-700">
+                <label class="font-bold text-white block text-xl">Email</label>
+                <p class="text-lg text-white ml-2">{{ user.email }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Profile Tab -->
+          <div class="tab-pane" id="edit">
+            <!-- Add form or inputs here for editing profile details -->
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="text-center mt-6">
+          <a href="{% url 'logout' %}" class="bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-800 focus:outline-none transition duration-300">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
